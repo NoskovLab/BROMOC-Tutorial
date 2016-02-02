@@ -1,0 +1,96 @@
+SYSTEM sphere radi 37.2213301228 cx 0.0 cy 0.0 cz 0.0 temp 300.0 cdie 80.0 iseed 12345678
+
+! 1 M = 6.0221412927E-4 part/Ang^3
+! Volume = 216005.234541 A^3
+!CLA   -1.0   142 0.000657391476193 part/Ang^3    1.09162413208 M
+!POT    1.0   155 0.000717575202885 part/Ang^3    1.19156155262 M 
+
+
+NUCLEOTIDES strands 1 nucleot 14 diffusion 0.001
+C G C G A A T A T T C G C G
+END
+
+PARTICLES
+POT  charge  1.0 diffusion 0.196
+CLA  charge -1.0 diffusion 0.203
+END
+
+BUFFERS
+POT  conc 1.192 mu -0.50420567896262924 volt 0.0 Rmin 0.0 Rmax 37.2213301228
+CLA  conc 1.092 mu -0.47238952194712264 volt 0.0 Rmin 0.0 Rmax 37.2213301228
+END
+
+FIXSITE nstfx 41
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41
+END
+
+OPEN read unit 1 name     suga-pot.pot
+OPEN read unit 2 name     suga-cla.pot
+OPEN read unit 3 name     pho-pot.pot
+OPEN read unit 4 name     pho-cla.pot
+OPEN read unit 5 name     aden-pot.pot
+OPEN read unit 6 name     aden-cla.pot
+OPEN read unit 7 name     cyto-pot.pot
+OPEN read unit 8 name     cyto-cla.pot
+OPEN read unit 9 name     thym-pot.pot
+OPEN read unit 10 name    thym-cla.pot
+OPEN read unit 11 name    guan-pot.pot
+OPEN read unit 12 name    guan-cla.pot
+OPEN read unit 13 name    pot-pot.pot
+OPEN read unit 14 name    cla-pot.pot
+OPEN read unit 15 name    cla-cla.pot
+OPEN write unit 16 name efpot-bd.data
+
+! 0.5961612354 = 0.001987204118 kcal/mol/K * 300K
+
+EFPOT res 0.1 write unit 16
+S   POT read unit 1
+S   CLA read unit 2
+P   POT read unit 3
+P   CLA read unit 4
+Ab  POT read unit 5
+Ab  CLA read unit 6
+Cb  POT read unit 7
+Cb  CLA read unit 8
+Tb  POT read unit 9
+Tb  CLA read unit 10
+Gb  POT read unit 11
+Gb  CLA read unit 12
+POT POT read unit 13
+POT CLA read unit 14
+CLA CLA read unit 15
+END
+
+CLOSE unit 1
+CLOSE unit 2
+CLOSE unit 3
+CLOSE unit 4
+CLOSE unit 5
+CLOSE unit 6
+CLOSE unit 7
+CLOSE unit 8
+CLOSE unit 9
+CLOSE unit 10
+CLOSE unit 11
+CLOSE unit 12
+CLOSE unit 13
+CLOSE unit 14
+CLOSE unit 15
+CLOSE unit 16
+
+COOR gener dna
+COOR setori x 0.0 y 0.0 z 0.0
+COOR gener ions
+
+SIMULATION ncycle 10000000 nmc 1 nprint 10000
+SIMULATION ncycle 10000 nbd 1 nprint 1000 dt 0.020
+
+OPEN write unit 5 name bd-ions-gener.bco
+OPEN write unit 6 name bd-ions-gener.xyz
+PRINT coor unit 5
+PRINT coor unit 6 xyz
+CLOSE unit 5
+CLOSE unit 6
+
+EXIT
+

@@ -1,0 +1,78 @@
+TITLE name dna-ions
+
+SYSTEM LX 30 LY 30 LZ 200 temp 300.0 cdie 80.0 iseed 0 volt 0.25 ionic 0.3
+
+NUCLEOTIDES strands 1 nucleot 20 diffusion 1.0d-2 
+A A A A A A A A A A A A A A A A A A A A A
+END
+
+PARTICLES
+POT charge  1.0  diffusion 0.196
+CLA charge -1.0  diffusion 0.203
+END
+
+BUFFER
+POT  conc 0.30  mu -0.23347  voltage  0.250  LZmin 96.00   LZmax 100.00
+CLA  conc 0.30  mu -0.24009  voltage  0.250  LZmin 96.00   LZmax 100.00
+POT  conc 0.30  mu -0.23347  voltage  0.000  LZmin -100.0  LZmax -96.00
+CLA  conc 0.30  mu -0.24009  voltage  0.000  LZmin -100.0  LZmax -96.00
+END
+
+LJSIN
+POT  epsilon 0.0870 sigma 3.142645
+CLA  epsilon 0.1500 sigma 4.044680 
+END
+
+LJPAR
+POT P   epsilon 0.1250 sigma 3.25
+POT S   epsilon 0.0750 sigma 3.65
+CLA P   epsilon 0.1000 sigma 5.45
+CLA S   epsilon 0.1000 sigma 6.85
+POT Ab  epsilon 0.2000 sigma 4.65
+CLA Ab  epsilon 0.2000 sigma 6.69
+END
+
+SRPMF
+POT POT c0 -0.600 c1 4.40 c2 0.90 c3 0.80 c4 0.25
+CLA CLA c0 -0.500 c1 4.90 c2 0.90 c3 0.80 c4 0.25
+POT CLA c0 -3.700 c1 2.90 c2 0.90 c3 0.75 c4 0.00
+POT S   c0 -0.750 c1 3.75 c2 2.90 c3 1.50 c4 0.10
+POT P   c0 -1.150 c1 3.50 c2 1.50 c3 0.75 c4 0.00
+POT Ab  c0 -0.050 c1 4.95 c2 1.50 c3 0.70 c4 0.05
+CLA S   c0 -0.025 c1 6.35 c2 3.00 c3 0.50 c4 0.05
+CLA P   c0 -0.025 c1 5.75 c2 0.75 c3 0.75 c4 0.05
+END
+
+MEMBRANE pore thick 50.0
+POT amplmemb 200.0 amplpore 200.0 pmemb 1.0 ppore 1.0 radi 12.0
+CLA amplmemb 200.0 amplpore 200.0 pmemb 1.0 ppore 1.0 radi 12.0
+P   amplmemb 200.0 amplpore 200.0 pmemb 1.0 ppore 1.0 radi 12.0
+S   amplmemb 200.0 amplpore 200.0 pmemb 1.0 ppore 1.0 radi 12.0
+Ab  amplmemb 200.0 amplpore 200.0 pmemb 1.0 ppore 1.0 radi 12.0
+END
+
+OPEN unit 1 write file name dna-ions.btr
+
+COOR gener all
+COOR setori x 0.0 y 0.0 z 0.0 
+
+OPEN unit 2 write name dna-ions.pdb
+PRINT coor unit 2 PDB
+PRINT dnacenter
+
+SIMULATION  ncycle 50000 ngcmc 10 nmcm 10 dt 0.01 nprint 10000
+SIMULATION  ncycle 50000 ngcmc 1 nbd 1 dt 0.02 nprint 10000
+
+PRINT coor unit 2 PDB
+PRINT dnacenter
+
+SIMULATION  ncycle 500000 ngcmc 1 nbd 1 dt 0.02 nprint 20000 traject iuntrj 1 nsave 1000
+
+PRINT coor unit 2 PDB
+PRINT dnacenter
+
+
+CLOSE unit 1
+CLOSE unit 2
+
+EXIT

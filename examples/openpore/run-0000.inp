@@ -1,0 +1,71 @@
+TITLE name openpore
+
+SYSTEM lx 57.0 ly 57.0 lz 131.0 cx 0.0 cy 0.0 cz 0.0 temp 300.0 cdie 80.0 iseed 0 
+
+PARTICLES
+POT  charge  1.0 diffusion 0.196
+CLA  charge -1.0 diffusion 0.203
+END
+
+BUFFERS
+POT  conc 1.00 mu -0.536202038679127 volt -0.25 LZmin  62.0 LZmax  65.5
+CLA  conc 1.00 mu -0.488638670535106 volt -0.25 LZmin  62.0 LZmax  65.5
+POT  conc 1.00 mu -0.536202038679127 volt  0.00 LZmin -65.5 LZmax -62.0
+CLA  conc 1.00 mu -0.488638670535106 volt  0.00 LZmin -65.5 LZmax -62.0
+END
+
+OPEN read unit 13 name    ../../efpot/pot-pot.pot
+OPEN read unit 14 name    ../../efpot/cla-pot.pot
+OPEN read unit 15 name    ../../efpot/cla-cla.pot
+
+! 0.5961612354 = 0.001987204118 kcal/mol/K * 300K
+
+EFPOT res 0.1           
+POT POT read unit 13
+POT CLA read unit 14
+CLA CLA read unit 15
+END
+CLOSE unit 13
+CLOSE unit 14
+CLOSE unit 15
+
+OPEN read unit 1 file name ../../maps/rep.pbeq
+OPEN read unit 2 file name ../../maps/st.pbeq
+OPEN read unit 3 file name ../../maps/rf.pbeq
+
+GSBP svdw 75 phiv phivunit 1 phix phixunit 2 rfpar rfparunit 3 rfpsingle
+
+CLOSE unit 1
+CLOSE unit 2
+CLOSE unit 3
+
+COOR gener ions
+
+SIMULATION ncycle 50000 ngcmc 1 nmcm 10 mcmax 1.0 nprint 5000 dt 0.010
+SIMULATION ncycle 50000 ngcmc 1 nbd 1 nprint 5000 dt 0.020
+
+OPEN write unit 5 name run-first-0000.bco
+OPEN write unit 6 name run-first-0000.xyz
+PRINT coor unit 5
+PRINT coor unit 6 xyz
+CLOSE unit 5
+CLOSE unit 6
+
+OPEN write unit 11 file name run-0000.btr
+OPEN write unit 12 name run-0000.cur
+
+SIMULATION ncycle 500000 nbd 1 ngcmc 1 dt 0.020 nprint 5000 traject iuntrj 11 nsave 5000 countions zcont 0.0,-30.1 iuncnt 12 svcntfq 5000 
+
+CLOSE unit 11
+CLOSE unit 12
+
+OPEN write unit 5 name run-last-0000.bco
+OPEN write unit 6 name run-last-0000.xyz
+PRINT coor unit 5
+PRINT coor unit 6 xyz
+CLOSE unit 5
+CLOSE unit 6
+
+EXIT
+
+

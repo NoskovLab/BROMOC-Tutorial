@@ -1,0 +1,33 @@
+TITLE name dna
+
+SYSTEM LX 30 LY 30 LZ 200 temp 300.0 cdie 80.0 iseed 0 volt 0.25 debye ionic 0.3
+
+NUCLEOTIDES strands 1 nucleot 20 diffusion 1.0d-2
+A A A A A A A A A A A A A A A A A A A A A
+END
+
+MEMBRANE pore thick 50.0
+P  amplmemb 200.0 amplpore 200.0 pmemb 1.0 ppore 1.0 radi 12.0
+S  amplmemb 200.0 amplpore 200.0 pmemb 1.0 ppore 1.0 radi 12.0
+Ab amplmemb 200.0 amplpore 200.0 pmemb 1.0 ppore 1.0 radi 12.0
+END
+
+COOR gener all
+COOR setori x 0.0 y 0.0 z 0.0
+
+open unit 2 write name dna.pdb
+PRINT coor unit 2 PDB
+PRINT dnacenter
+
+OPEN unit 1 write file name dna.btr
+
+SIMULATION  ncycle 500000 ngcmc 0 nbd 1 dt 0.02 nprint 20000 traject iuntrj 1 nsave 1000
+
+PRINT coor unit 2 PDB
+PRINT dnacenter
+
+CLOSE unit 1
+
+CLOSE unit 2
+EXIT
+

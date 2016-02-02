@@ -1,0 +1,42 @@
+TITLE name alfaHL-wt
+
+SYSTEM lx 57.0 ly 57.0 lz 131.0 cx 0.0 cy 0.0 cz 0.0 temp 300.0 cdie 80.0 iseed 0
+
+PARTICLES
+POT  charge  1.0 diffusion 0.196
+CLA  charge -1.0 diffusion 0.203
+END
+
+OPEN read unit 1 file name ../../maps/st.pbeq
+OPEN read unit 2 file name ../../maps/rep.pbeq
+OPEN read unit 3 file name ../../maps/rf.pbeq
+
+GSBP phix phixunit 1 svdw 1000 phiv phivunit 2 rfpar rfparunit 3 rfpsingle
+
+CLOSE unit 1
+CLOSE unit 2
+CLOSE unit 3
+
+OPEN write unit 1 name st-xy.dat
+OPEN write unit 2 name st-z.dat
+OPEN write unit 3 name rep-xy.dat
+OPEN write unit 4 name rep-z.dat
+OPEN write unit 5 name rf-xy.dat
+OPEN write unit 6 name rf-z.dat
+PRINT static noheader  unit 1  res 0.1  x1 -50  y1 -50  z1 0   x2 50  y2 50  z2 0
+PRINT static noheader  unit 2  res 0.1  x1 10   y1 10   z1 -65  x2 10  y2 10  z2 65
+PRINT repul  noheader  unit 3  res 0.1  x1 -50  y1 -50  z1 0   x2 50  y2 50  z2 0
+PRINT repul  noheader  unit 4  res 0.1  x1 10   y1 10   z1 -65  x2 10  y2 10  z2 65
+PRINT rfpar  noheader  unit 5  res 0.1  x1 -50  y1 -50  z1 0   x2 50  y2 50  z2 0
+PRINT rfpar  noheader  unit 6  res 0.1  x1 10   y1 10   z1 -65  x2 10  y2 10  z2 65
+CLOSE unit 1
+CLOSE unit 2
+CLOSE unit 3
+CLOSE unit 4
+CLOSE unit 5
+CLOSE unit 6
+
+
+
+EXIT
+

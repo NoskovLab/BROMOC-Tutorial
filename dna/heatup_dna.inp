@@ -1,0 +1,30 @@
+TITLE name alfaHL-wt
+
+SYSTEM lx 57.0 ly 57.0 lz 131 cx 0.0 cy 0.0 cz 0.0 cdie 80.0 temp 330.0 iseed 0 debye ionic 1.0 dnafree
+
+NUCLEOTIDES strands 1 nucleot 40 diffusion 0.1 iseed 0
+C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C
+end
+
+OPEN read unit 1 file name ../maps/rep.pbeq
+OPEN read unit 2 file name ../maps/st_noion.pbeq
+
+GSBP svdw 100 phiv phivunit 1 phix phixunit 2
+
+CLOSE unit 1
+CLOSE unit 2
+
+OPEN read unit 5 name dna-0000.bco
+COOR read unit 5
+CLOSE unit 5
+
+CONTRANS ctn 1
+2 kx 0.1  ky 0.1  kz 0.6  x 0.0  y 0.0  z -52.0
+END
+
+SIMULATION ncycle 50000 nbd 1 dt 0.020 nprint 5000
+
+OPEN write unit 5 name dna.bco
+PRINT coor unit 5
+CLOSE unit 5
+EXIT

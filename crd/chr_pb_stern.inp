@@ -1,0 +1,65 @@
+* THIS SCRIPT TO COMPUTE .COR FILES  
+*
+
+
+
+set sys wt 
+
+open read card unit 10 name top_all27_prot_na.rtf
+read  rtf card unit 10
+
+open read card unit 20 name par_all27_prot_na.prm
+read para card unit 20
+
+stream wt.str
+
+
+coor orie norotate
+coor trans zdir -11.5
+coor stat
+
+cons fix sele .not. type H* end
+mini sd nstep 2000
+cons fix sele none end
+
+mini abnr nstep 2000
+
+
+! Charges
+scalar wmain = charge
+
+open write card name wt_chr.cor unit 35
+write coordinates card unit 35
+* Coordinates gererated from 7AHL.pdb, crd format
+* Charges in last column
+*
+
+close unit 35
+
+! Read PB radii
+prnlev 0
+stream radius.str
+prnlev 5
+
+open write card name wt_pb.cor unit 36
+write coordinates card select all end unit 36
+* Coordinates gererated from 7AHL.pdb, crd format
+* PB radii in last column
+*
+
+! Stern radii according to Wonpil Im
+scalar wmain add 0.50 sele chem N* end  ! 0.75 - 0.25
+scalar wmain add 0.68 sele chem O* end  ! 0.93 - 0.25
+scalar wmain add 0.75 sele chem C* end  ! 1.00 - 0.25
+scalar wmain add 0.75 sele chem S* end  ! 1.00 - 0.25
+
+open write card name wt_stern.cor unit 37
+write coordinates card select all end unit 37
+* Coordinates gererated from 7AHL.pdb, crd format
+* Stern radii in last column
+*
+
+! Position of the membrane along the Z-axis (Lyna)
+coor stat select type CA .and. ( resid 132 .or. resid 120 ) .and. segid PRO* end
+stop
+ 

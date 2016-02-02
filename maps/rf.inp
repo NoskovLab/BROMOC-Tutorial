@@ -1,0 +1,30 @@
+IONTYPE
+POT  charge  1.0 radius 0.5
+END
+
+open read unit 10 name ../crd/wt_pb.cor ! sigma / 2
+open read unit 11 name ../crd/wt_chr.cor ! sigma / 2
+
+PROTEIN_STRUCTURE CHARMM runit 10 cunit 11
+
+ITERATION maxpnp 100000 maxphi 100000 maxcion 100000 tolphi 2.0D-6 -
+          tolcion 5.0D-11 lambda 0.2
+
+PHYSICAL_PARAMETERS epsp 2.0  epsw 80.0  temp 300.0  conc 1.00  watr 0.0  ionr 0.0
+
+MEMBRANE tmemb 38.0  epsm 2.0  htmemb 0.0  epsh 2.0  zmemb  30.1  vmemb 0.0
+
+OBJECTS rsphe 0.0  xsphe 0.0  ysphe 0.0  zsphe 0.0  epss 0.0 -
+        rcyln 14.0  hcyln 38.0  xcyln 0.0  ycyln 0.0  zcyln 30.1 epsc 80.0 -
+        bxmax 28.0  bymax 28.0  bzmax 65.0 bxmin -28.0  bymin -28.0  bzmin -65.0  epsb 0.0
+
+GRID nclx 202 ncly 202 nclz 260 dcel 0.5 xbcen 0.0 ybcen 0.0 zbcen 0.0
+
+RFPAR box
+
+OPEN write unit 15 file name rf.pbeq
+WRITE rfpar POT  unit 15
+
+STOP
+
+
