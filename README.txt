@@ -10,11 +10,11 @@ In order to get a solid understanding on how BROMOC works, consult the original 
  
 - Pablo M. De Biase, Suren Markosyan and Sergei Noskov. Microsecond Simulations of DNA and Ion Transport in Nanopores with Noverl Ion-Ion and Ion-Nucleotides Effective Potentials. Journal of Computational Chemistry (2014) 
 
-For complete a description of BROMOC usage, please refer to the "Documentation" section provided with the code tarball (freely available to download from http://noskovlab.com/downloads/bromoc.tar.bz2)
+For complete a description of BROMOC usage, please refer to the "Documentation" section provided with the code tarball (freely available to download from https://github.com/NoskovLab/BROMOC)
  
 The software needed to follow this tutorial:
- - BROMOC (http://www.noskovlab.com)
- - EFPOT/ECP (http://www.noslovlab.com)
+ - BROMOC (https://github.com/NoskovLab/BROMOC)
+ - EFPOT/ECP (https://github.com/NoskovLab/EP-ECP)
  - CHARMM (http://www.charmm.org)
  - VMD (http://www.ks.uiuc.edu/Research/vmd/)
 
